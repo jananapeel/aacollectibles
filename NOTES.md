@@ -13,7 +13,30 @@ Two things live here:
   `theme/README.md`.
 
 `theme/assets/styles.css` is the root `styles.css` plus a Shopify-only block appended at
-the end. **Make design changes in the root file and re-append**, or the two will drift.
+the end. Don't edit it directly — edit the root file and re-run the build, which
+re-appends the block for you.
+
+### Regenerating
+
+The four static HTML pages and `theme/assets/styles.css` are **generated**. Don't
+hand-edit them; edit the sources and run:
+
+```
+pwsh build/build.ps1              # regenerate the pages + theme stylesheet
+pwsh build/build.ps1 -Preview     # also emit build/preview.html, one shareable file
+```
+
+| Edit this | To change |
+| --- | --- |
+| `styles.css` (root) | Anything visual, in both the prototype and the theme |
+| `main.js` (root) | Prototype behaviour |
+| `build/parts/nav.html`, `foot.html` | Header and footer — shared by all four pages |
+| `build/parts/home.html` etc. | One page's content |
+| `build/build.ps1` | The placeholder listings (the catalogue near the top) |
+| `build/shopify-additions.css` | Styles that only the Shopify theme needs |
+
+`theme/` is hand-maintained apart from its stylesheet — the build never touches the
+Liquid.
 
 ### The static prototype
 
