@@ -1,0 +1,83 @@
+
+/* ============================================================
+   SHOPIFY THEME ADDITIONS
+   Everything above this line is shared with the static prototype in the repo
+   root. Only add things below that exist because the site is now on Shopify:
+   real links, real forms, product and cart pages.
+   ============================================================ */
+
+/* chips are now links (collection filters) and labels (product options),
+   not buttons — they need the centring a button gave us for free */
+.fchip{display:inline-flex;align-items:center;text-decoration:none;cursor:pointer}
+.fchip[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.chips input.sr:checked + .fchip{background:var(--gold-fill);border-color:var(--gold-fill);color:var(--on-gold)}
+.chips input.sr:focus-visible + .fchip{outline:2px solid var(--gold);outline-offset:3px}
+
+/* real product photography replaces the drawn card face when it exists */
+.cardface{text-decoration:none}
+.cf-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slab-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.listing-meta h3 a{color:inherit;text-decoration:none}
+.listing-meta h3 a:hover{color:var(--gold)}
+.buy form{display:flex;margin:0}
+
+/* pagination */
+.pager{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:40px;flex-wrap:wrap}
+.pager-at{font-family:var(--mono);font-size:12.5px;color:var(--mist-2);letter-spacing:.04em}
+
+/* ---------- product page ---------- */
+.pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:56px;align-items:start}
+.pdp-media{position:relative}
+.pdp-photo{width:100%;border-radius:6px;border:1px solid var(--line);background:var(--case)}
+.pdp-fallback{aspect-ratio:5/7;border-radius:6px;max-width:420px}
+.pdp-thumbs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.pdp-thumbs img{width:74px;height:74px;object-fit:cover;border-radius:4px;border:1px solid var(--line)}
+.pdp-title{font-family:var(--display);font-size:clamp(26px,3.6vw,38px);letter-spacing:-.03em;margin-top:12px}
+.pdp-info .set{font-family:var(--mono);font-size:13px;color:var(--mist-2);margin-top:10px;letter-spacing:.03em}
+.pdp-price{font-family:var(--mono);font-size:30px;color:var(--gold);letter-spacing:-.02em;margin-top:22px}
+.pdp-form{margin-top:24px;display:flex;flex-direction:column;gap:18px;align-items:stretch}
+.pdp-facet{flex-wrap:wrap;align-items:flex-start;gap:10px}
+.pdp-facet .filter-lbl{width:100%}
+.pdp-stock{font-size:13.5px;color:var(--mist-2)}
+.pdp-add{width:100%}
+.pdp-desc{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);font-size:15px}
+.pdp-trust{margin-top:26px}
+
+/* ---------- cart ---------- */
+.cart-lines .sets-row{grid-template-columns:minmax(0,1fr) 150px 96px 110px}
+.cart-line .nm a{color:var(--white)}
+.cart-line .nm a:hover{color:var(--gold)}
+.cart-line .nm small{display:block;font-family:var(--mono);font-size:11px;color:var(--mist-2);margin-top:4px}
+.qty{
+  width:70px;height:40px;padding:0 10px;border-radius:5px;text-align:center;
+  border:1px solid var(--line-2);background:var(--case-2);color:var(--white);
+  font-family:var(--mono);font-size:14px;
+}
+.cart-foot{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  flex-wrap:wrap;margin-top:28px;padding-top:24px;border-top:1px solid var(--line);
+}
+.cart-total{display:flex;flex-direction:column;gap:6px}
+.cart-total .price{font-family:var(--mono);font-size:28px;color:var(--gold);letter-spacing:-.02em}
+.cart-total .fine{margin-top:2px}
+.cart-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ---------- rich text from the Shopify admin ---------- */
+.rte > * + *{margin-top:1em}
+.rte h2{font-family:var(--display);font-size:26px;letter-spacing:-.025em;margin-top:1.6em}
+.rte h3{font-size:18px;font-weight:700;margin-top:1.4em}
+.rte a{color:var(--gold);border-bottom:1px solid var(--gold-dim)}
+.rte ul{list-style:disc;padding-left:1.2em}
+.rte li{margin-bottom:.4em}
+.rte img{border-radius:6px}
+.page-body{max-width:70ch}
+
+@media (max-width:900px){
+  .pdp{grid-template-columns:1fr;gap:34px}
+}
+@media (max-width:760px){
+  .cart-lines .sets-row{grid-template-columns:minmax(0,1fr) 96px;gap:10px 14px}
+  .cart-line .code{grid-column:1}
+  .cart-foot{flex-direction:column;align-items:stretch}
+  .cart-actions .btn{flex:1}
+}
