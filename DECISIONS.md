@@ -1,0 +1,179 @@
+# AACollectibles — Decisions
+
+Decision log for how the site is built and what it runs on. Newest context at the top of
+each entry. `NOTES.md` is the to-do list; this file is the *why*.
+
+Each entry is one of:
+
+- **Decided** — settled, build against it
+- **Provisional** — the working assumption, cheap to reverse, not locked
+- **Open** — needs a call before the work can start
+- **Deferred** — deliberately parked, with the trigger to revisit
+
+---
+
+## Background: what "a backend" has to do here
+
+Four separate jobs, which is why there isn't one single answer:
+
+1. **Product & inventory** — what's in stock, its condition, its price
+2. **Checkout & payments** — card processing, tax, shipping rates, PCI compliance
+3. **Order operations** — packing slips, labels, tracking, refunds
+4. **Buylist** — buying collections from customers
+
+Jobs 1–3 are commodity problems that a hosted platform solves better than we would.
+Job 4 is the one with no good off-the-shelf answer at our size.
+
+The site as it stands today is four static HTML pages sharing one stylesheet, with no
+server behind it. The cart in `main.js` is a prop — it increments a counter and shows a
+toast. It has no line items and no persistence, and whichever path below we take will
+replace it entirely.
+
+---
+
+## 001 — Shopify as the commerce backend
+
+**Status: Provisional** · 11 Sep 2026
+
+Shopify is the system of record for products, inventory, orders and payments.
+
+**Why:** payments, tax calculation, shipping rates and PCI compliance are not worth
+owning for a shop this size, and the failure modes of getting them wrong are expensive.
+Shopify covers jobs 1–3 in one place and is already the preferred option.
+
+**Not locked because** the storefront approach (002) is still open, and a trading-card
+platform (see *Alternatives*) could displace it if inventory upkeep turns out to be the
+dominant cost.
+
+---
+
+## 002 — Storefront: Shopify theme or static + Storefront API
+
+**Status: Open** · recommendation below
+
+Two ways to attach the current design to Shopify:
+
+**A. Port the design into a Shopify theme** *(recommended)*
+Shopify hosts the site; the design becomes Liquid templates. The CSS transfers
+essentially unchanged, the listing card becomes a snippet, the category pages become
+collection templates, and the filter chips map onto Shopify's native filtering.
+
+- Gets us for free: search, pagination, customer accounts, order status, discount
+  codes, email receipts, checkout
+- Costs us: a port, and the design now lives in Shopify rather than in this repo
+
+**B. Keep the static site, pull products via the Storefront API**
+The current files stay as they are, hosted free on Cloudflare Pages or Netlify, with
+products fetched client-side.
+
+- Gets us: the repo stays the source of truth, total control of the markup
+- Costs us: hand-building search, filtering, pagination and cart persistence — all of
+  which A provides at no cost
+
+**Recommendation: A.** With roughly 9,500 listings, B means rebuilding commodity
+features that A includes. Headless earns its keep at larger scale or with a team; for
+two people it is mostly self-inflicted work.
+
+Shopify's Buy Buttons were considered as a third option and rejected — they suit a
+dozen products, not thousands.
+
+---
+
+## 003 — Physical counter and POS
+
+**Status: Deferred** · 11 Sep 2026
+
+Not building for in-person selling yet.
+
+**Why:** there may be a physical counter later, but it isn't happening now, and
+designing around it would drive the whole stack choice prematurely.
+
+**Revisit when in-person selling becomes real.** It is the single biggest input to this
+decision — selling in two channels off one stock pool makes POS integration the
+deciding factor rather than a feature, and it would put Shopify POS or a card-shop
+platform well ahead of anything else. Reopen 001 and 002 at that point.
+
+Note the homepage currently advertises counter hours (Tue–Fri 11:00–7:00, Sat
+10:00–6:00). That copy is placeholder and should come off before launch unless it's
+true.
+
+---
+
+## 004 — Buylist: an email form
+
+**Status: Decided** · 11 Sep 2026
+
+The sell-to-us page collects submissions and emails them to us. No portal, no account,
+no status tracking, no automated quoting.
+
+**Why:** Shopify has no native buylist, and the purpose-built options all arrive
+attached to a whole platform. Volume is low enough that a human reading an inbox is
+genuinely the right tool, and it does not block launch.
+
+**What it needs:** contact details, a description of the cards or collection, an asking
+price, and photo upload. It should handle single cards and whole collections alike.
+
+**Implementation:** a form service rather than a server of our own — Shopify Forms if
+we're on Shopify, otherwise Formspree or Netlify Forms. Photo upload is the constraint
+that will decide which; check the file-size limits on the free tiers before committing.
+
+See `NOTES.md` for the build checklist.
+
+---
+
+## 005 — Getting inventory in, and keeping it priced
+
+**Status: Open** · this is the real risk
+
+Checkout is the easy part. Card inventory is the awkward part: thousands of SKUs, most
+at quantity 1, the same card existing at several conditions and two languages at
+different prices, and prices that drift with the market.
+
+Shopify's data model handles this — product = the card printing, options = Condition /
+Language / Finish, which is exactly its three-option limit. Quantity-1 stock is fine.
+
+The unsolved parts:
+
+- **Bulk import.** Nobody is typing 9,500 listings into an admin. Plan on CSV import or
+  Matrixify from day one.
+- **Repricing.** Needs a scheduled script against a price source.
+- **Price source.** TCGplayer's API requires approval. **Confirm access early** — this
+  is the item most likely to stall the whole project, and it has a lead time we don't
+  control.
+
+---
+
+## Alternatives considered
+
+**Trading-card platforms — BinderPOS, Crystal Commerce, TCGplayer Pro.**
+Worth an hour of evaluation before committing to 002. They solve inventory, pricing and
+buylist out of the box, and BinderPOS is Shopify-native.
+
+The tension is real and worth stating plainly: **these tools and a bespoke design pull
+against each other.** They bring their own storefront assumptions. A custom theme keeps
+the design and leaves us owning the inventory tooling; a card platform solves inventory
+and constrains the design.
+
+Leaning custom theme, given how much the current design has been iterated on — but
+revisit if manual inventory upkeep becomes the thing that hurts.
+
+**Snipcart.** Turns static HTML into a store with data attributes, so the current files
+survive untouched. Rejected because inventory and order operations stay ours.
+
+**Stripe Checkout plus our own backend.** Cheapest and most flexible, and the most work
+by a distance. No reason to take that on at this size.
+
+**Square Online.** Only becomes interesting if 003 reopens and we're already on Square
+hardware at the counter.
+
+---
+
+## Verify before committing
+
+Plans, pricing and ownership in this space change, so treat these as things to check
+rather than facts:
+
+- Current Shopify plan pricing and what each tier includes
+- BinderPOS's current status — it has changed hands
+- TCGplayer API approval process and lead time
+- Photo-upload limits on whichever form service we pick (004)

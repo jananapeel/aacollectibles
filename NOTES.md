@@ -1,6 +1,7 @@
 # AACollectibles — Notes
 
-Running list of things to build and decisions still open.
+Running list of things to build. For *why* the stack is what it is — Shopify, the
+buylist, the storefront approach — see `DECISIONS.md`.
 
 ## Site structure
 
@@ -57,9 +58,13 @@ Add a page where customers can sell their cards to us by submitting an offer.
 - Should handle both single cards and whole collections/binders/bulk.
 - The **"Get a quote"** button in the *Got a binder collecting dust?* section of the homepage
   should link here — it currently goes nowhere.
-- The `Sell to us` links in the header nav and footer should point here too.
-- Decide how submissions reach us (email, form service, or a real backend) and whether
-  offers get a status the customer can check.
+- The `Sell to us` links in the header nav, the mobile menu and the footer should point
+  here too.
+- **Submissions go out by email** — a form service (Shopify Forms, Formspree or Netlify
+  Forms), not a server of ours. No portal, no account, no status tracking. Decided;
+  see `DECISIONS.md` 004.
+- Photo upload is the thing that decides which form service — check file-size limits on
+  the free tiers before picking one.
 
 ### Wire up the filters and links for real
 The category-page filter chips work client-side on the listings already on the page.
@@ -77,3 +82,6 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
   homepage is made up. Card names and set codes are real; the numbers are not.
   Replace before the site goes public. The footer shows a visible note saying so —
   remove that note once real inventory is in.
+- **Counter hours** in the footer (Tue–Fri 11:00–7:00, Sat 10:00–6:00) imply a walk-in
+  shop. Take them off unless that's true — in-person selling is parked for now
+  (`DECISIONS.md` 003).
