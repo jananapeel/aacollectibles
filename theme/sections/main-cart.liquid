@@ -1,0 +1,61 @@
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Your cart</p>
+        <h2>{% if cart.item_count > 0 %}Ready when you are{% else %}Nothing in the cart yet{% endif %}</h2>
+      </div>
+      <a class="link-more" href="{{ routes.all_products_collection_url }}">Keep browsing</a>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="sets cart-lines">
+          <div class="sets-row sets-head">
+            <span>Item</span><span>Condition</span><span>Qty</span><span>Total</span>
+          </div>
+
+          {%- for item in cart.items -%}
+            <div class="sets-row cart-line">
+              <span class="nm">
+                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- if item.product.type != blank -%}
+                  <small class="set">{{ item.product.type }}</small>
+                {%- endif -%}
+              </span>
+              <span class="code">{% unless item.variant.title == 'Default Title' %}{{ item.variant.title }}{% endunless %}</span>
+              <span class="ct">
+                <label class="sr" for="qty-{{ item.index | plus: 1 }}">Quantity</label>
+                <input class="qty" id="qty-{{ item.index | plus: 1 }}" type="number"
+                       name="updates[]" value="{{ item.quantity }}" min="0"
+                       {% if item.variant.inventory_management == 'shopify' %}max="{{ item.variant.inventory_quantity }}"{% endif %}>
+              </span>
+              <span class="yr">{{ item.final_line_price | money }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-foot">
+          <div class="cart-total">
+            <span class="filter-lbl">Subtotal</span>
+            <span class="price">{{ cart.total_price | money }}</span>
+            <span class="fine">Shipping and tax calculated at checkout.</span>
+          </div>
+          <div class="cart-actions">
+            <button class="btn btn-line" type="submit" name="update">Update</button>
+            <button class="btn btn-gold" type="submit" name="checkout">Checkout</button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <p class="no-results">
+        Your cart is empty. Start with the
+        <a href="{{ routes.all_products_collection_url }}">full catalogue</a>.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Cart" }
+{% endschema %}

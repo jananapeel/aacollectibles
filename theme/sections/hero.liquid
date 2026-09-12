@@ -1,0 +1,125 @@
+{%- assign feat = all_products[section.settings.featured_product] -%}
+{%- assign fv = feat.selected_or_first_available_variant -%}
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      {%- if settings.logo -%}
+        <img class="crest" src="{{ settings.logo | image_url: width: 260 }}" alt="" width="104" height="99">
+      {%- else -%}
+        <img class="crest" src="{{ 'logo.png' | asset_url }}" alt="" width="104" height="99">
+      {%- endif -%}
+
+      <h1>{{ section.settings.heading }}</h1>
+      <div class="lede rte">{{ section.settings.lede }}</div>
+
+      <div class="cta-row">
+        {%- if section.settings.cta_label != blank -%}
+          <a class="btn btn-gold" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.link_label != blank -%}
+          <a class="btn btn-text" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="trust">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              {{ block.settings.text }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if feat != blank -%}
+      <div class="case bracket">
+        <div class="case-label">
+          <span class="t">{{ section.settings.case_label }}</span>
+          <span class="live"><i class="dot"></i>{{ fv.inventory_quantity | default: 1 }} of {{ fv.inventory_quantity | default: 1 }}</span>
+        </div>
+
+        <div class="slab">
+          <div class="slab-label">
+            <div class="meta">
+              <div class="set">{{ feat.type }}</div>
+              <div class="name">{{ feat.title }}</div>
+              {%- if feat.metafields.custom.cert -%}
+                <div class="cert">CERT {{ feat.metafields.custom.cert }}</div>
+              {%- endif -%}
+            </div>
+            {%- if feat.metafields.custom.grade -%}
+              <div class="grade">
+                <div class="g-t">{{ feat.metafields.custom.grade_label | default: 'GEM MT' }}</div>
+                <div class="g-n">{{ feat.metafields.custom.grade }}</div>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="slab-window">
+            {%- if feat.featured_image -%}
+              {{ feat.featured_image | image_url: width: 520 | image_tag: class: 'slab-photo', alt: feat.title }}
+            {%- else -%}
+              <div class="art"></div>
+              <div class="plate"><b>{{ feat.title }}</b><span>{{ feat.vendor }}</span></div>
+            {%- endif -%}
+            <div class="holo"></div>
+          </div>
+        </div>
+
+        <div class="case-foot">
+          <div>
+            <div class="price">{{ fv.price | money }}</div>
+            <div class="sub">{{ section.settings.case_note }}</div>
+          </div>
+          <form method="post" action="{{ routes.cart_add_url }}" data-cart-form>
+            <input type="hidden" name="id" value="{{ fv.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button class="case-btn" type="submit" data-title="{{ feat.title | escape }}"
+                    {% unless fv.available %}disabled{% endunless %}>
+              {%- if fv.available %}Add to cart{% else %}Sold{% endif -%}
+            </button>
+          </form>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "html", "id": "heading", "label": "Headline",
+      "default": "Pulled, sleeved,<br><em>shipped.</em>",
+      "info": "Wrap a word in <em> to set it in gold." },
+    { "type": "richtext", "id": "lede", "label": "Intro paragraph" },
+    { "type": "text", "id": "cta_label", "label": "Primary button", "default": "Shop the case" },
+    { "type": "url",  "id": "cta_url",   "label": "Primary button link" },
+    { "type": "text", "id": "link_label", "label": "Text link", "default": "Sell us your collection →" },
+    { "type": "url",  "id": "link_url",   "label": "Text link URL" },
+    { "type": "header", "content": "Display case" },
+    { "type": "product", "id": "featured_product", "label": "Featured product",
+      "info": "Leave empty to hide the case entirely." },
+    { "type": "text", "id": "case_label", "label": "Case label", "default": "Featured in the case" },
+    { "type": "text", "id": "case_note", "label": "Note under the price", "default": "Ships insured" }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust line",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $50" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [ { "type": "trust" }, { "type": "trust" }, { "type": "trust" }, { "type": "trust" } ]
+    }
+  ]
+}
+{% endschema %}

@@ -5,7 +5,17 @@ buylist, the storefront approach — see `DECISIONS.md`.
 
 ## Site structure
 
-Plain static site — no build step, no dependencies. Open any page directly in a browser.
+Two things live here:
+
+- **The repo root** — the static prototype. No build step, no dependencies; open any
+  page directly in a browser. This is the design reference.
+- **`theme/`** — the Shopify theme scaffold that carries the same design. See
+  `theme/README.md`.
+
+`theme/assets/styles.css` is the root `styles.css` plus a Shopify-only block appended at
+the end. **Make design changes in the root file and re-append**, or the two will drift.
+
+### The static prototype
 
 | File | Page |
 | --- | --- |

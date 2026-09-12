@@ -1,0 +1,79 @@
+{%- comment -%}
+  Renders one listing tile.
+  Usage: {% render 'product-card', product: product %}
+
+  Reads from the product, with graceful fallbacks so it works before any
+  metafields are set up:
+    vendor ................ the game name on the card face  (Pokémon / One Piece / Riftbound)
+    type .................. the set line under the title
+    tag  rarity:SIR ....... the gold rarity badge
+    tag  face:ember ....... which drawn card face to use when there is no image
+    variant title ......... the condition pill (PSA 10 Gem Mint, Near Mint, Sealed...)
+{%- endcomment -%}
+
+{%- assign v = product.selected_or_first_available_variant -%}
+
+{%- assign face = 'cf-steel' -%}
+{%- assign rarity = '' -%}
+{%- for tag in product.tags -%}
+  {%- if tag contains 'face:' -%}{%- assign face = tag | split: ':' | last | prepend: 'cf-' -%}{%- endif -%}
+  {%- if tag contains 'rarity:' -%}{%- assign rarity = tag | split: ':' | last -%}{%- endif -%}
+{%- endfor -%}
+
+{%- assign cond = v.title -%}
+{%- if cond == 'Default Title' -%}{%- assign cond = 'Near Mint' -%}{%- endif -%}
+{%- assign condcls = 'c-nm' -%}
+{%- if cond contains 'PSA' or cond contains 'BGS' or cond contains 'CGC' -%}{%- assign condcls = 'c-gem' -%}{%- endif -%}
+{%- if cond contains 'Sealed' -%}{%- assign condcls = 'c-seal' -%}{%- endif -%}
+
+<article class="listing">
+  <a class="cardface {{ face }}" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 420 | image_tag:
+         loading: 'lazy', widths: '210,420,630', class: 'cf-photo', alt: product.title }}
+    {%- else -%}
+      <div class="orb"></div><div class="ring"></div>
+      <div class="cf-top">
+        <span class="cf-game">{{ product.vendor | default: shop.name }}</span>
+        {%- if rarity != blank %}<span class="cf-rar">{{ rarity }}</span>{% endif -%}
+      </div>
+      <div class="cf-bot">
+        <b>{{ product.title | truncate: 22 }}</b>
+        {%- if product.metafields.custom.card_number %}<span>{{ product.metafields.custom.card_number }}</span>{% endif -%}
+      </div>
+    {%- endif -%}
+    <div class="sheen"></div>
+  </a>
+
+  <div class="listing-meta">
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if product.type != blank -%}<p class="set">{{ product.type }}</p>{%- endif -%}
+    <span class="cond {{ condcls }}">{{ cond | upcase }}</span>
+
+    <div class="buy">
+      <div>
+        <span class="price">{{ v.price | money }}</span>
+        <span class="stock">
+          {%- if v.available -%}
+            {%- if v.inventory_management == 'shopify' and v.inventory_quantity > 0 -%}
+              {{ v.inventory_quantity }} in stock
+            {%- else -%}
+              In stock
+            {%- endif -%}
+          {%- else -%}
+            Sold
+          {%- endif -%}
+        </span>
+      </div>
+
+      <form method="post" action="{{ routes.cart_add_url }}" data-cart-form>
+        <input type="hidden" name="id" value="{{ v.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button class="add" type="submit" data-title="{{ product.title | escape }}"
+                {% unless v.available %}disabled{% endunless %}>
+          {%- if v.available %}Add{% else %}Sold{% endif -%}
+        </button>
+      </form>
+    </div>
+  </div>
+</article>

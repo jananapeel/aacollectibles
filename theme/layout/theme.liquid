@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon -%}
+    <link rel="icon" href="{{ settings.favicon | image_url: width: 96 }}">
+  {%- endif -%}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+  {{ 'styles.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    /* stamp the saved theme before first paint so there is no flash */
+    (function(){try{var t=localStorage.getItem('aac-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+  </script>
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name | handle }}">
+
+  {% section 'counter-tape' %}
+  {% section 'header' %}
+
+  <main id="MainContent">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="{{ 'main.js' | asset_url }}" defer></script>
+</body>
+</html>

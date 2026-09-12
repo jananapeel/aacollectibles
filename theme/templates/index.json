@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Pulled, sleeved,<br><em>shipped.</em>",
+        "lede": "<p>AACollectibles is a two-person card counter dealing <b>Pokémon</b>, <b>One Piece</b> and <b>Riftbound</b> singles, graded slabs and sealed product. Every raw card is checked under a loupe and photographed before it goes in the case — the card in the photo is the card you get.</p>",
+        "cta_label": "Shop the case",
+        "cta_url": "/collections/all",
+        "link_label": "Sell us your collection →",
+        "link_url": "/pages/sell-to-us",
+        "case_label": "Featured in the case",
+        "case_note": "Ships insured"
+      },
+      "blocks": {
+        "t1": { "type": "trust", "settings": { "text": "Free shipping over $50" } },
+        "t2": { "type": "trust", "settings": { "text": "Sleeve, toploader, team bag — always" } },
+        "t3": { "type": "trust", "settings": { "text": "14-day returns on raw singles" } },
+        "t4": { "type": "trust", "settings": { "text": "4,800+ orders shipped" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+
+    "games": {
+      "type": "game-panels",
+      "settings": {
+        "eyebrow": "Three games, one counter",
+        "heading": "Pick your side of the case",
+        "say": "Singles priced off current market, sealed priced off what we paid. Each game gets its own room — sets, singles and sealed, all in one place.",
+        "more_label": "Browse everything",
+        "more_url": "/collections/all"
+      },
+      "blocks": {
+        "g1": {
+          "type": "game",
+          "settings": {
+            "title": "Pokémon TCG",
+            "blurb": "Base Set through Scarlet & Violet — vintage WOTC, modern chase, and the Japanese prints that never hit shelves here.",
+            "chip": "Now stocking · Prismatic Evolutions",
+            "rows": "Scarlet & Violet singles | 6,100+\nVintage WOTC (Base–Neo) | 340+\nJapanese exclusives | 890+\nGraded slabs | 120+\nSealed ETBs & bundles | In stock",
+            "cta": "Shop Pokémon"
+          }
+        },
+        "g2": {
+          "type": "game",
+          "settings": {
+            "title": "One Piece Card Game",
+            "blurb": "OP-01 Romance Dawn forward — leaders, alt arts, manga rares, and the Don!! promos people actually ask for.",
+            "chip": "Now stocking · OP-12",
+            "rows": "OP-01 → OP-12 singles | 3,400+\nLeaders & Don!! promos | 210+\nManga rares & parallels | 95+\nGraded slabs | 60+\nSealed boxes (EN + JP) | In stock",
+            "cta": "Shop One Piece"
+          }
+        },
+        "g3": {
+          "type": "game",
+          "settings": {
+            "title": "Riftbound",
+            "blurb": "Riot's League of Legends TCG. Newest game on the counter — Origins singles, Legends, Battlefields and starter product.",
+            "chip": "New · Origins (OGN)",
+            "rows": "Origins singles | 1,200+\nLegends & champion units | 140+\nSignatures & showcase alts | 70+\nBattlefields | 45+\nStarter decks & boxes | In stock",
+            "cta": "Shop Riftbound"
+          }
+        }
+      },
+      "block_order": ["g1", "g2", "g3"]
+    },
+
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "count": 6,
+        "eyebrow": "New this week",
+        "heading": "In the case right now",
+        "say": "Fresh intake, listed Tuesday. Raw singles are Near Mint or better — anything with whitening or a print line gets binned, not listed.",
+        "more_label": "See all"
+      }
+    },
+
+    "process": {
+      "type": "process",
+      "settings": {
+        "eyebrow": "From intake to mailbox",
+        "heading": "How a card gets to you",
+        "say": "The same four steps for a $3 common and a four-figure slab."
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Loupe check",
+            "body": "Every raw single goes under 10× magnification — edge whitening, print lines, surface scratches, centering front and back. Anything that won't grade Near Mint doesn't make it to the site."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Condition call & photos",
+            "body": "Graded on the standard scale — NM, LP, MP — then shot front and back on a neutral card. No stock images, ever: the card in the listing photo is the exact card that ships."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Packed like it's ours",
+            "body": "Penny sleeve, toploader, team bag, then a rigid mailer. Slabs get bubble-wrapped in a box. Orders over $200 ship signature-required at no extra charge."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Out the same day",
+            "body": "Orders placed before 3:00 PM ship that afternoon, Monday to Friday. Tracking hits your inbox the moment the label scans."
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+
+    "sell": {
+      "type": "sell-band",
+      "settings": {
+        "heading": "Got a binder collecting dust?",
+        "body": "Send photos of the pages, or bring the whole shoebox to the counter. We buy Pokémon, One Piece and Riftbound collections of any size — bulk, binders, sealed cases, and single high-end cards.",
+        "cta_label": "Get a quote",
+        "cta_url": "/pages/sell-to-us"
+      },
+      "blocks": {
+        "o1": { "type": "offer", "settings": { "figure": "Cash", "label": "paid on the spot" } },
+        "o2": { "type": "offer", "settings": { "figure": "+20%", "label": "if you take store credit" } },
+        "o3": { "type": "offer", "settings": { "figure": "24h", "label": "typical quote turnaround" } }
+      },
+      "block_order": ["o1", "o2", "o3"]
+    },
+
+    "alerts": {
+      "type": "alerts",
+      "settings": {
+        "eyebrow": "Restock alerts",
+        "heading": "Know before the box sells out",
+        "say": "One email per drop — set releases, sealed restocks, and anything notable that lands in the case.",
+        "cal_title": "On the calendar",
+        "cal_tag": "Sample data"
+      },
+      "blocks": {
+        "d1": { "type": "date", "settings": { "date": "SEP 26", "title": "Mega Evolution", "meta": "POKÉMON · SEALED + SINGLES", "status": "Preorder" } },
+        "d2": { "type": "date", "settings": { "date": "OCT 03", "title": "Riftbound Origins restock", "meta": "RIFTBOUND · BOOSTER + STARTERS", "status": "Waitlist" } },
+        "d3": { "type": "date", "settings": { "date": "OCT 10", "title": "OP-12 Legacy of the Master", "meta": "ONE PIECE · BOOSTER BOX", "status": "Preorder" } }
+      },
+      "block_order": ["d1", "d2", "d3"]
+    }
+  },
+
+  "order": ["hero", "games", "featured", "process", "sell", "alerts"]
+}

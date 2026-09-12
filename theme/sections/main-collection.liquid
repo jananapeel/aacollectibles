@@ -1,0 +1,116 @@
+<section class="page-head">
+  <div class="wrap">
+    <nav class="crumbs">
+      <a href="{{ routes.root_url }}">Home</a><span>/</span>
+      <b style="color:var(--mist)">{{ collection.title }}</b>
+    </nav>
+
+    <div class="page-title">
+      <div>
+        {%- if section.settings.publisher != blank -%}
+          <p class="pub">{{ section.settings.publisher }}</p>
+        {%- endif -%}
+        <h1>{{ collection.title }}</h1>
+      </div>
+      {%- if section.settings.aside_url != blank -%}
+        <a class="link-more" href="{{ section.settings.aside_url }}">{{ section.settings.aside_label }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if collection.description != blank -%}
+      <div class="page-blurb">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if collection.filters.size > 0 -%}
+<div class="filterbar">
+  <div class="wrap filter-in">
+    {%- for filter in collection.filters -%}
+      {%- if filter.type == 'list' -%}
+        <div class="facet">
+          <span class="filter-lbl">{{ filter.label }}</span>
+          <div class="chips">
+            <a class="fchip" href="{{ filter.url_to_remove }}"
+               aria-pressed="{% if filter.active_values.size == 0 %}true{% else %}false{% endif %}">All</a>
+            {%- for value in filter.values -%}
+              <a class="fchip"
+                 href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"
+                 aria-pressed="{{ value.active }}"
+                 {% if value.count == 0 and value.active == false %}aria-disabled="true"{% endif %}>
+                {{ value.label }}
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <span class="result-count">
+      {{ collection.products_count }} {{ collection.products_count | pluralize: 'listing', 'listings' }}
+    </span>
+  </div>
+</div>
+{%- endif -%}
+
+<section class="sec">
+  <div class="wrap">
+    {%- paginate collection.products by section.settings.per_page -%}
+      <div class="listings">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          <p class="no-results">
+            Nothing in the case matches that combination. Try widening a filter.
+          </p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager" role="navigation" aria-label="Pagination">
+          {%- if paginate.previous -%}
+            <a class="btn btn-line" href="{{ paginate.previous.url }}">&larr; Previous</a>
+          {%- endif -%}
+          <span class="pager-at">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}
+            <a class="btn btn-line" href="{{ paginate.next.url }}">Next &rarr;</a>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "publisher",
+      "label": "Eyebrow above the title",
+      "info": "e.g. The Pokémon Company · 1996 →"
+    },
+    {
+      "type": "text",
+      "id": "aside_label",
+      "label": "Corner link label",
+      "default": "How we grade"
+    },
+    {
+      "type": "url",
+      "id": "aside_url",
+      "label": "Corner link"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Listings per page",
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 24
+    }
+  ]
+}
+{% endschema %}

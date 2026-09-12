@@ -1,0 +1,30 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "AACollectibles",
+    "theme_version": "0.1.0",
+    "theme_author": "AACollectibles",
+    "theme_documentation_url": "https://github.com/",
+    "theme_support_url": "https://github.com/"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "The circular badge. Its own background is #0D1014, which matches the dark theme exactly — do not crop it to a transparent PNG or it will lose that fit."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "paragraph",
+        "content": "Colours live in assets/styles.css as CSS custom properties, not here. Gold is deliberately split into --gold (ink, darkens in light mode) and --gold-fill (paint, never changes). Read the comment at the top of that file before changing either."
+      }
+    ]
+  }
+]

@@ -1,0 +1,72 @@
+<header class="head">
+  <div class="wrap head-in">
+    <a class="brand" href="{{ routes.root_url }}">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 140 }}" alt="{{ shop.name | escape }}" width="46" height="44">
+      {%- else -%}
+        <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="46" height="44">
+      {%- endif -%}
+      <span class="brand-type">
+        <b>{{ shop.name }}</b>
+        <span>{{ section.settings.tagline }}</span>
+      </span>
+    </a>
+
+    <nav class="nav">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}" data-page="{{ link.handle }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="head-act">
+      <a class="icon-btn" id="searchBtn" href="{{ routes.search_url }}" aria-label="Search the catalogue">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <span class="btn-label">Search</span>
+      </a>
+
+      <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Switch theme">
+        <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.2M19.4 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+        <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z"/></svg>
+      </button>
+
+      <a class="icon-btn" id="cartBtn" href="{{ routes.cart_url }}">
+        <span class="btn-label">Cart</span>
+        <span class="count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <span class="btn-label">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <div class="wrap">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}" data-page="{{ link.handle }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Wordmark tagline",
+      "info": "The small gold caps under the shop name.",
+      "default": "TCG SHOP"
+    }
+  ]
+}
+{% endschema %}

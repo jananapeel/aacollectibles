@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "aside_label": "How we grade",
+        "aside_url": "/pages/condition-guide",
+        "per_page": 24
+      }
+    }
+  },
+  "order": ["main"]
+}

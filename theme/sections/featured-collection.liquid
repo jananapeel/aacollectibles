@@ -1,0 +1,41 @@
+{%- assign col = collections[section.settings.collection] -%}
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.say != blank -%}<p class="say">{{ section.settings.say }}</p>{%- endif -%}
+      </div>
+      {%- if col != blank -%}
+        <a class="link-more" href="{{ col.url }}">{{ section.settings.more_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="listings">
+      {%- for product in col.products limit: section.settings.count -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="no-results">
+          Pick a collection for this section in the theme editor, or add products to it.
+        </p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured listings",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "count", "label": "How many", "min": 3, "max": 12, "step": 3, "default": 6 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New this week" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "In the case right now" },
+    { "type": "text", "id": "say", "label": "Sub-heading" },
+    { "type": "text", "id": "more_label", "label": "Corner link label", "default": "See all" }
+  ],
+  "presets": [ { "name": "Featured listings" } ]
+}
+{% endschema %}

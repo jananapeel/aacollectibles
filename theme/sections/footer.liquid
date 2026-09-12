@@ -1,0 +1,72 @@
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="{{ routes.root_url }}">
+          {%- if settings.logo -%}
+            <img src="{{ settings.logo | image_url: width: 140 }}" alt="{{ shop.name | escape }}" width="46" height="44">
+          {%- else -%}
+            <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="46" height="44">
+          {%- endif -%}
+          <span class="brand-type">
+            <b>{{ shop.name }}</b>
+            <span>{{ section.settings.tagline }}</span>
+          </span>
+        </a>
+        <p>{{ section.settings.blurb }}</p>
+        {%- if section.settings.hours != blank -%}
+          <div class="hours">{{ section.settings.hours | newline_to_br }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.title }}</h4>
+          <ul>
+            {%- for link in linklists[block.settings.menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="foot-bar">
+      <span>
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.legal }}
+      </span>
+      {%- if section.settings.note != blank -%}
+        <span class="tag">{{ section.settings.note }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Wordmark tagline", "default": "TCG SHOP" },
+    { "type": "textarea", "id": "blurb", "label": "Blurb" },
+    { "type": "textarea", "id": "hours", "label": "Counter hours / contact",
+      "info": "One item per line. Remove entirely if there is no walk-in counter." },
+    { "type": "textarea", "id": "legal", "label": "Legal line",
+      "default": "Pokémon, One Piece and Riftbound are trademarks of their respective owners. This shop is not affiliated with or endorsed by them." },
+    { "type": "text", "id": "note", "label": "Corner tag",
+      "info": "Used for the demo-content warning. Clear it before launch." }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Footer", "blocks": [ { "type": "menu" }, { "type": "menu" }, { "type": "menu" } ] }
+  ]
+}
+{% endschema %}

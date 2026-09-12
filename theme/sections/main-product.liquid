@@ -1,0 +1,121 @@
+{%- assign v = product.selected_or_first_available_variant -%}
+
+<section class="sec">
+  <div class="wrap">
+    <nav class="crumbs" style="margin-bottom:24px">
+      <a href="{{ routes.root_url }}">Home</a><span>/</span>
+      {%- if collection -%}
+        <a href="{{ collection.url }}">{{ collection.title }}</a><span>/</span>
+      {%- endif -%}
+      <b style="color:var(--mist)">{{ product.title }}</b>
+    </nav>
+
+    <div class="pdp">
+      <div class="pdp-media">
+        {%- if product.featured_image -%}
+          {{ product.featured_image | image_url: width: 900 | image_tag:
+             widths: '450,900,1350', class: 'pdp-photo', alt: product.title }}
+        {%- else -%}
+          <div class="cardface cf-steel pdp-fallback">
+            <div class="orb"></div><div class="ring"></div>
+            <div class="cf-bot"><b>{{ product.title }}</b></div>
+            <div class="sheen"></div>
+          </div>
+        {%- endif -%}
+
+        {%- if product.images.size > 1 -%}
+          <div class="pdp-thumbs">
+            {%- for image in product.images -%}
+              {{ image | image_url: width: 180 | image_tag: loading: 'lazy', alt: image.alt }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="pdp-info">
+        {%- if product.vendor != blank -%}<p class="eyebrow">{{ product.vendor }}</p>{%- endif -%}
+        <h1 class="pdp-title">{{ product.title }}</h1>
+        {%- if product.type != blank -%}<p class="set">{{ product.type }}</p>{%- endif -%}
+
+        <p class="pdp-price">{{ v.price | money }}</p>
+
+        {% form 'product', product, class: 'pdp-form', data-cart-form: '' %}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="facet pdp-facet">
+                <span class="filter-lbl">{{ option.name }}</span>
+                <div class="chips">
+                  {%- for value in option.values -%}
+                    {%- assign optid = 'opt-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                    <input class="sr" type="radio" id="{{ optid }}"
+                           name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}"
+                           {% if option.selected_value == value %}checked{% endif %}>
+                    <label class="fchip" for="{{ optid }}">{{ value }}</label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+
+            <label class="sr" for="variant-select">Variant</label>
+            <select class="sr" id="variant-select" name="id" data-variant-select>
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}"
+                        data-title="{{ variant.title | escape }}"
+                        data-price="{{ variant.price | money }}"
+                        {% if variant == v %}selected{% endif %}
+                        {% unless variant.available %}disabled{% endunless %}>
+                  {{ variant.title }} — {{ variant.price | money }}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ v.id }}">
+          {%- endunless -%}
+
+          <p class="pdp-stock">
+            {%- if v.available -%}
+              {%- if v.inventory_management == 'shopify' and v.inventory_quantity > 0 -%}
+                {{ v.inventory_quantity }} in stock — ships same day if ordered before 3:00 PM
+              {%- else -%}
+                In stock — ships same day if ordered before 3:00 PM
+              {%- endif -%}
+            {%- else -%}
+              Sold — ask at the counter and we'll watch for another
+            {%- endif -%}
+          </p>
+
+          <button class="btn btn-gold pdp-add" type="submit"
+                  data-title="{{ product.title | escape }}"
+                  {% unless v.available %}disabled{% endunless %}>
+            {%- if v.available %}Add to cart{% else %}Sold{% endif -%}
+          </button>
+        {% endform %}
+
+        {%- if product.description != blank -%}
+          <div class="pdp-desc rte">{{ product.description }}</div>
+        {%- endif -%}
+
+        <ul class="trust pdp-trust">
+          <li>Sleeve, toploader, team bag — always</li>
+          <li>Free shipping over {{ section.settings.free_shipping_over | money_without_trailing_zeros }}</li>
+          <li>14-day returns on raw singles</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "free_shipping_over",
+      "label": "Free shipping threshold (in cents)",
+      "info": "5000 = $50.00",
+      "default": "5000"
+    }
+  ]
+}
+{% endschema %}

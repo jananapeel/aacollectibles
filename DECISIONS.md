@@ -77,6 +77,45 @@ two people it is mostly self-inflicted work.
 Shopify's Buy Buttons were considered as a third option and rejected — they suit a
 dozen products, not thousands.
 
+### What porting actually involves
+
+There is no path where the static HTML files get uploaded to Shopify. A theme is a fixed
+directory structure written in Liquid, and products come out of Shopify's database
+through template loops. Hardcoded listing markup is invisible to Shopify — it isn't a
+product, so it can't be bought, counted or filtered.
+
+What survives the port:
+
+| Asset | Transfers? |
+| --- | --- |
+| `styles.css` | **Almost verbatim.** It has zero `url()` references — every graphic is a gradient or inline SVG — so there are no asset paths to rewrite |
+| `Logo.png` | Yes |
+| Copy and page structure | Yes |
+| `main.js` — theme toggle, drawer, counter strip | Yes, unchanged |
+| `main.js` — cart | **No.** Replaced by Shopify's AJAX Cart API |
+| The 33 hardcoded listings | **No.** They become products in the admin |
+| The three category pages | **No.** They collapse into one collection template |
+| Filter chips | **No.** Rewired to Shopify's server-side filtering |
+
+Effort: roughly 2–4 days for someone comfortable in Liquid, a week or two while
+learning it.
+
+**A scaffold now exists at `theme/`** — layout, header/footer, the six homepage
+sections, collection, product, cart and search templates, and the product-card snippet,
+with the stylesheet wired in. See `theme/README.md` for how to push it and what is
+deliberately missing.
+
+**Starting point: a purpose-built minimal theme, not Dawn.** Dawn was the initial
+instinct, on the reasoning that it brings working cart, search and accounts. Rejected
+once the specifics were checked: our CSS is complete and self-contained and written
+against our own class names, so Dawn's own stylesheet and markup would mostly be code to
+delete — and the two things Dawn would genuinely have saved us, checkout and the new
+customer accounts, are hosted by Shopify outside the theme anyway.
+
+**The prototype in the repo root stays.** It is the design reference the port is checked
+against, and the stylesheet is literally shared with it — see the note in
+`theme/README.md` about not letting the two copies drift.
+
 ---
 
 ## 003 — Physical counter and POS
