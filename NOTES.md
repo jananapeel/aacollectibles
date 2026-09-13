@@ -5,6 +5,10 @@ buylist, the storefront approach — see `DECISIONS.md`.
 
 ## Site structure
 
+**The brand is spelled AACollectibles** — with an *i*, matching the logo. Settled
+12 Sep 2026; the GitHub repo, the local folder, the remote URL and every page now use
+it. If you find `aacollectables` anywhere, it is a leftover, not an alternative.
+
 Two things live here:
 
 - **The repo root** — the static prototype. No build step, no dependencies; open any
@@ -218,9 +222,6 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
 Decisions for us, as opposed to data we are waiting on — for that see
 *Waiting on the shop owners* above.
 
-- **Spelling:** the logo reads "COLLECTIBLES" but the repo is named `aacollectables`.
-  The site uses the logo's spelling everywhere. Pick one, and pick it before a domain
-  gets bought.
 - **Everything invented is still on the page.** Listings, prices, stock counts, listing
   totals, release dates and the whole show schedule. Card names and set codes are real;
   none of the numbers are. Two visible markers say so — the `tag` in the footer and the
