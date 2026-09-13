@@ -567,9 +567,7 @@ button,input,select{font:inherit}
   padding:15px 20px;border-bottom:1px solid var(--line);transition:background .15s;
 }
 .sets-row:last-child{border-bottom:0}
-.sets-row:hover{background:var(--case-2)}
 .sets-head{background:var(--case-2);font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist-2)}
-.sets-head:hover{background:var(--case-2)}
 .sets .code{font-family:var(--mono);font-size:12.5px;color:var(--gold);letter-spacing:.06em}
 .sets .nm{font-size:14.5px;color:var(--white);font-weight:500;min-width:0}
 .sets .yr,.sets .ct{font-family:var(--mono);font-size:12.5px;color:var(--mist-2)}
@@ -787,6 +785,59 @@ button,input,select{font:inherit}
   .show{grid-template-columns:58px minmax(0,1fr);gap:14px;padding:16px}
   .show-side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:wrap}
   .next-show{padding:24px 20px}
+}
+
+/* ============================================================
+   PRE-SHOPIFY BUYING STATE
+   The site cannot take an order yet, so it says so and routes people to the
+   channels that do work. Delete this whole block, the .status-band markup and
+   the #buy section the day checkout goes live.
+   ============================================================ */
+
+.status-band{background:var(--case);border-bottom:1px solid var(--line)}
+.status-band .wrap{position:relative;padding-block:11px}
+.status-band p{font-size:13.5px;color:var(--mist);max-width:none}
+.status-band b{color:var(--white);font-weight:700}
+.status-band a{color:var(--gold);border-bottom:1px solid var(--gold-dim)}
+.status-band a:hover{border-bottom-color:var(--gold)}
+
+/* the one solid-gold thing in the header: the only action that works today */
+.btn-buy{
+  display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:6px;
+  background:var(--gold-fill);color:var(--on-gold);white-space:nowrap;
+  font-size:13.5px;font-weight:700;
+  transition:background .15s,transform .12s;
+}
+.btn-buy:hover{background:#FFEA6A;transform:translateY(-1px)}
+.btn-buy:active{transform:translateY(0)}
+
+.buy-routes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.route{
+  display:flex;flex-direction:column;padding:26px 24px;border-radius:4px;
+  border:1px solid var(--line);background:var(--case);
+  transition:border-color .2s,transform .2s;
+}
+.route:hover{border-color:var(--gold-dim);transform:translateY(-3px)}
+.route-k{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mist-2);
+}
+.route h3{font-family:var(--display);font-size:21px;letter-spacing:-.025em;margin-top:12px}
+.route p{font-size:14px;margin-top:11px;flex:1}
+.route-go{
+  margin-top:20px;font-size:13px;font-weight:700;color:var(--gold);
+  letter-spacing:.02em;
+}
+/* the direct route is the one we actually want people to take */
+.route-lead{border-color:var(--gold-dim);background:linear-gradient(180deg,var(--case-2),var(--case))}
+
+@media (max-width:900px){
+  .buy-routes{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .status-band .wrap{padding-block:10px}
+  .status-band p{font-size:12.5px}
+  .btn-buy{height:44px;padding:0 14px;font-size:13px}
 }
 
 /* ============================================================

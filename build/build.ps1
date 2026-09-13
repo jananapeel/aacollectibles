@@ -97,7 +97,6 @@ function Render-Listings($items) {
   foreach ($i in $items) {
     $data = ''
     foreach ($k in ($i.attrs.Keys | Sort-Object)) { $data += " data-$k=""$($i.attrs[$k])""" }
-    $addName = ($i.title -replace '&#8212;', '-') -replace '&amp;', 'and'
     [void]$sb.Append(@"
       <article class="listing"$data>
         <div class="cardface $($i.face)">
@@ -112,7 +111,6 @@ function Render-Listings($items) {
           <span class="cond $($i.condCls)">$($i.condTxt)</span>
           <div class="buy">
             <div><span class="price">$($i.price)</span><span class="stock">$($i.stock)</span></div>
-            <button class="add" type="button" data-add="$addName">Add</button>
           </div>
         </div>
       </article>

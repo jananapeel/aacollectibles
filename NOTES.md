@@ -83,6 +83,38 @@ The theme choice is saved to `localStorage` under `aac-theme`, and a small inlin
 in each page's `<head>` applies it before first paint to avoid a flash. With no saved
 choice the site follows the operating system.
 
+## Before Shopify: the site cannot take an order
+
+The cart was removed on purpose. Until checkout is live, every route on the site leads
+somewhere that actually works:
+
+- A **status band** under the header on every page says ordering direct is coming, and
+  links to TCGplayer, Instagram and the shows page.
+- The homepage **`#buy` section** lays out the three real routes. The Instagram card is
+  visually led because buying direct skips the marketplace cut — that is the argument
+  that moves people off TCGplayer and eBay, and it works with no backend at all.
+- Listings are a **showcase**: price and stock, no buy button.
+- Set tables are plain rows, not links.
+
+**The day Shopify checkout goes live**, delete: the `.status-band` markup in
+`build/parts/nav.html`, the `#buy` section in `build/parts/home.html`, and the
+`PRE-SHOPIFY BUYING STATE` block at the end of `styles.css`. Then restore the cart from
+the theme, not from git history — `theme/assets/main.js` already has the real one.
+
+### Live links
+
+| Where | URL |
+| --- | --- |
+| Instagram | `https://www.instagram.com/aa.collectibles_` |
+| TCGplayer | `https://www.tcgplayer.com/sellers/Allen-Collects/a0652519` |
+| eBay | **not supplied yet** — see the TODO in `build/parts/foot.html` |
+
+Link-in-bio (`refs.me/aa_collectibles`) is deliberately **not** on the site. It points
+back at these same destinations, so linking to it from here just adds a hop — and its
+URL carries `utm_source=ig&utm_medium=social&utm_content=link_in_bio`, which would
+misreport website clicks as Instagram bio clicks. If you do want it on the site, strip
+those parameters first.
+
 ## To build
 
 ### Buy-from-customers page (submit an offer)
@@ -117,9 +149,14 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
   homepage is made up. Card names and set codes are real; the numbers are not.
   Replace before the site goes public. The footer shows a visible note saying so —
   remove that note once real inventory is in.
-- **Counter hours** in the footer (Tue–Fri 11:00–7:00, Sat 10:00–6:00) imply a walk-in
-  shop. Take them off unless that's true — in-person selling is parked for now
-  (`DECISIONS.md` 003).
+- **Numbers still to supply.** The order count came out of the hero (it said "4,800+
+  orders shipped" and was invented — it now reads "Also selling on TCGplayer and eBay").
+  Still invented and still visible: the per-game listing counts in the game panels
+  (6,100+ / 3,400+ / 1,200+) and the facts strips on each category page. These matter
+  more than usual now that the site gets shown to people in person.
+- **eBay URL.** Everything else is wired; eBay is the one link still missing. There is a
+  TODO comment in `build/parts/foot.html` marking exactly where it goes, and it should
+  also become a fourth card in the homepage `#buy` section.
 - **The show schedule is invented.** Every venue, date, table number and admission
   price in `build/parts/shows.html` is made up, and the venues are deliberately generic
   so none of it reads as a real event. Replace with actual bookings before launch, and

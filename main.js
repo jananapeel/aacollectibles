@@ -19,26 +19,6 @@
     run.innerHTML += run.innerHTML;
   });
 
-  /* ---- cart ----------------------------------------------------------- */
-  var count = 0;
-  function paintCount() {
-    document.querySelectorAll('.count').forEach(function (el) { el.textContent = count; });
-  }
-  document.addEventListener('click', function (e) {
-    var add = e.target.closest('[data-add]');
-    if (add) {
-      count++;
-      paintCount();
-      say('Added to cart — ' + add.getAttribute('data-add'));
-      return;
-    }
-    if (e.target.closest('#cartBtn')) {
-      say(count ? count + ' item' + (count > 1 ? 's' : '') + ' in your cart.' : 'Your cart is empty.');
-    }
-    if (e.target.closest('#searchBtn')) {
-      say('Search opens the full catalogue — 9,500 listings.');
-    }
-  });
 
   /* ---- newsletter ----------------------------------------------------- */
   var subForm = document.getElementById('subForm');

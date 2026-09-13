@@ -45,15 +45,11 @@
       <a href="index.html#grading" data-page="grading">Condition guide</a>
     </nav>
     <div class="head-act">
-      <button class="icon-btn" id="searchBtn" type="button" aria-label="Search the catalogue">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-        <span class="btn-label">Search</span>
-      </button>
+      <a class="btn-buy" href="index.html#buy">Where to buy</a>
       <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Switch theme">
         <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.4 12h2.2M19.4 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
         <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z"/></svg>
       </button>
-      <button class="icon-btn" id="cartBtn" type="button"><span class="btn-label">Cart</span> <span class="count">0</span></button>
       <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
         <span class="btn-label">Menu</span>
@@ -72,6 +68,19 @@
     </div>
   </div>
 </header>
+
+<!-- Honest status: this site cannot take an order yet. Remove this whole band
+     the day Shopify checkout goes live. -->
+<div class="status-band">
+  <div class="wrap">
+    <p>
+      <b>Ordering direct from this site is coming.</b> Today you can buy from us on
+      <a href="https://www.tcgplayer.com/sellers/Allen-Collects/a0652519" target="_blank" rel="noopener">TCGplayer</a>,
+      by <a href="https://www.instagram.com/aa.collectibles_" target="_blank" rel="noopener">DM on Instagram</a>,
+      or in person <a href="shows.html">at a show</a>.
+    </p>
+  </div>
+</div>
 
 <main>
 <section class="page-head">
@@ -140,7 +149,6 @@
           <span class="cond c-gem">BGS 9.5</span>
           <div class="buy">
             <div><span class="price">$740</span><span class="stock">1 in stock</span></div>
-            <button class="add" type="button" data-add="Shanks - Manga Rare">Add</button>
           </div>
         </div>
       </article>
@@ -157,7 +165,6 @@
           <span class="cond c-nm">RAW / NEAR MINT</span>
           <div class="buy">
             <div><span class="price">$96</span><span class="stock">3 in stock</span></div>
-            <button class="add" type="button" data-add="Monkey.D.Luffy - Leader Parallel">Add</button>
           </div>
         </div>
       </article>
@@ -174,7 +181,6 @@
           <span class="cond c-nm">RAW / NEAR MINT</span>
           <div class="buy">
             <div><span class="price">$128</span><span class="stock">4 in stock</span></div>
-            <button class="add" type="button" data-add="Boa Hancock - Alternate Art">Add</button>
           </div>
         </div>
       </article>
@@ -191,7 +197,6 @@
           <span class="cond c-nm">RAW / NEAR MINT</span>
           <div class="buy">
             <div><span class="price">$112</span><span class="stock">2 in stock</span></div>
-            <button class="add" type="button" data-add="Portgas.D.Ace - Alternate Art">Add</button>
           </div>
         </div>
       </article>
@@ -208,7 +213,6 @@
           <span class="cond c-gem">PSA 10 GEM MINT</span>
           <div class="buy">
             <div><span class="price">$310</span><span class="stock">1 in stock</span></div>
-            <button class="add" type="button" data-add="Trafalgar Law - Leader">Add</button>
           </div>
         </div>
       </article>
@@ -225,7 +229,6 @@
           <span class="cond c-nm">RAW / NEAR MINT</span>
           <div class="buy">
             <div><span class="price">$154</span><span class="stock">2 in stock</span></div>
-            <button class="add" type="button" data-add="Kaido - Alternate Art">Add</button>
           </div>
         </div>
       </article>
@@ -242,7 +245,6 @@
           <span class="cond c-nm">RAW / NEAR MINT</span>
           <div class="buy">
             <div><span class="price">$268</span><span class="stock">1 in stock</span></div>
-            <button class="add" type="button" data-add="Yamato - Manga Rare">Add</button>
           </div>
         </div>
       </article>
@@ -259,7 +261,6 @@
           <span class="cond c-seal">SEALED</span>
           <div class="buy">
             <div><span class="price">$28</span><span class="stock">16 in stock</span></div>
-            <button class="add" type="button" data-add="ST-21 Starter Deck - Gear 5">Add</button>
           </div>
         </div>
       </article>
@@ -276,7 +277,6 @@
           <span class="cond c-seal">SEALED / LIMIT 1</span>
           <div class="buy">
             <div><span class="price">$118</span><span class="stock">6 in stock</span></div>
-            <button class="add" type="button" data-add="OP-12 Booster Box">Add</button>
           </div>
         </div>
       </article>
@@ -298,14 +298,14 @@
 
     <div class="sets">
       <div class="sets-row sets-head"><span>Code</span><span>Set</span><span>Released</span><span>Listings</span></div>
-      <a class="sets-row" href="#"><span class="code">OP-12</span><span class="nm">Legacy of the Master</span><span class="yr">2025</span><span class="ct">302</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-11</span><span class="nm">A Fist of Divine Speed</span><span class="yr">2025</span><span class="ct">288</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-10</span><span class="nm">Royal Blood</span><span class="yr">2024</span><span class="ct">276</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-09</span><span class="nm">Emperors in the New World</span><span class="yr">2024</span><span class="ct">341</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-07</span><span class="nm">500 Years in the Future</span><span class="yr">2024</span><span class="ct">259</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-05</span><span class="nm">Awakening of the New Era</span><span class="yr">2023</span><span class="ct">234</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-02</span><span class="nm">Paramount War</span><span class="yr">2023</span><span class="ct">198</span></a>
-      <a class="sets-row" href="#"><span class="code">OP-01</span><span class="nm">Romance Dawn</span><span class="yr">2022</span><span class="ct">221</span></a>
+      <div class="sets-row"><span class="code">OP-12</span><span class="nm">Legacy of the Master</span><span class="yr">2025</span><span class="ct">302</span></div>
+      <div class="sets-row"><span class="code">OP-11</span><span class="nm">A Fist of Divine Speed</span><span class="yr">2025</span><span class="ct">288</span></div>
+      <div class="sets-row"><span class="code">OP-10</span><span class="nm">Royal Blood</span><span class="yr">2024</span><span class="ct">276</span></div>
+      <div class="sets-row"><span class="code">OP-09</span><span class="nm">Emperors in the New World</span><span class="yr">2024</span><span class="ct">341</span></div>
+      <div class="sets-row"><span class="code">OP-07</span><span class="nm">500 Years in the Future</span><span class="yr">2024</span><span class="ct">259</span></div>
+      <div class="sets-row"><span class="code">OP-05</span><span class="nm">Awakening of the New Era</span><span class="yr">2023</span><span class="ct">234</span></div>
+      <div class="sets-row"><span class="code">OP-02</span><span class="nm">Paramount War</span><span class="yr">2023</span><span class="ct">198</span></div>
+      <div class="sets-row"><span class="code">OP-01</span><span class="nm">Romance Dawn</span><span class="yr">2022</span><span class="ct">221</span></div>
     </div>
   </div>
 </section>
@@ -341,10 +341,9 @@
         </a>
         <p>Pokémon, One Piece and Riftbound singles, slabs and sealed product. Hand-graded, hand-packed, shipped the day you order.</p>
         <div class="hours">
-          Counter hours<br>
-          Tue – Fri · 11:00 – 7:00<br>
-          Sat · 10:00 – 6:00<br>
-          hello@aacollectibles.com
+          Online &middot; open all hours<br>
+          In person &middot; <a href="shows.html">at a show most weekends</a><br>
+          DM <a href="https://www.instagram.com/aa.collectibles_" target="_blank" rel="noopener">&#64;aa.collectibles_</a>
         </div>
       </div>
       <div>
@@ -353,9 +352,7 @@
           <li><a href="pokemon.html">Pokémon TCG</a></li>
           <li><a href="one-piece.html">One Piece Card Game</a></li>
           <li><a href="riftbound.html">Riftbound</a></li>
-          <li><a href="pokemon.html">Graded slabs</a></li>
-          <li><a href="pokemon.html">Sealed product</a></li>
-          <li><a href="index.html">New arrivals</a></li>
+          <li><a href="shows.html">Shows &amp; events</a></li>
         </ul>
       </div>
       <div>
@@ -364,19 +361,16 @@
           <li><a href="index.html#grading">Condition guide</a></li>
           <li><a href="index.html#grading">Shipping &amp; packing</a></li>
           <li><a href="index.html#grading">Returns</a></li>
-          <li><a href="index.html">Track an order</a></li>
-          <li><a href="index.html">FAQ</a></li>
         </ul>
       </div>
       <div>
-        <h4>Shop info</h4>
+        <h4>Find us</h4>
         <ul>
-          <li><a href="shows.html">Shows &amp; events</a></li>
+          <li><a href="index.html#buy">Where to buy</a></li>
           <li><a href="index.html#sell">Sell to us</a></li>
-          <li><a href="index.html">About AACollectibles</a></li>
-          <li><a href="index.html">Contact</a></li>
-          <li><a href="index.html">Instagram</a></li>
-          <li><a href="index.html">eBay store</a></li>
+          <li><a href="https://www.instagram.com/aa.collectibles_" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.tcgplayer.com/sellers/Allen-Collects/a0652519" target="_blank" rel="noopener">TCGplayer store</a></li>
+          <!-- TODO: eBay store link goes here once supplied -->
         </ul>
       </div>
     </div>
