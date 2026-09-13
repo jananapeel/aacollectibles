@@ -77,6 +77,9 @@ Deliberately out of scope for a skeleton — add as you need them:
   to `/cart` to check out
 - `templates/blog.liquid`, `article.liquid`, `list-collections.liquid`
 - The buylist page (`DECISIONS.md` 004) — a Shopify page plus a form app
+- A shows template. The prototype has `shows.html` with the weekend card-show schedule;
+  it has no Shopify equivalent yet. It is static content, so a `page.shows` template
+  with a section carrying the rows as blocks would do it.
 
 ## Known rough edges
 

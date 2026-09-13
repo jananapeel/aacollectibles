@@ -132,7 +132,8 @@ $pages = @(
   @{ key='index';     part='home.html';      title='AACollectibles'; desc='AACollectibles - Pokemon, One Piece and Riftbound trading cards. Singles, graded slabs and sealed product, hand-graded and shipped same day.' },
   @{ key='pokemon';   part='pokemon.html';   title='Pokemon TCG - AACollectibles'; desc='Pokemon TCG singles, graded slabs and sealed product. Base Set through Scarlet and Violet, English and Japanese print.' },
   @{ key='one-piece'; part='one-piece.html'; title='One Piece Card Game - AACollectibles'; desc='One Piece Card Game singles from OP-01 onward. Leaders, alt arts, manga rares and sealed boxes.' },
-  @{ key='riftbound'; part='riftbound.html'; title='Riftbound - AACollectibles'; desc='Riftbound, the League of Legends TCG. Origins singles, Legends, Battlefields and starter product.' }
+  @{ key='riftbound'; part='riftbound.html'; title='Riftbound - AACollectibles'; desc='Riftbound, the League of Legends TCG. Origins singles, Legends, Battlefields and starter product.' },
+  @{ key='shows'; part='shows.html'; title='Shows - AACollectibles'; desc='Card shows AACollectibles tables at most weekends. Dates, times, venues and table numbers.' }
 )
 
 $bodies = @{}
@@ -191,6 +192,7 @@ if ($Preview) {
     $s = $s.Replace('href="pokemon.html"',       'href="#pokemon"')
     $s = $s.Replace('href="one-piece.html"',     'href="#one-piece"')
     $s = $s.Replace('href="riftbound.html"',     'href="#riftbound"')
+    $s = $s.Replace('href="shows.html"',         'href="#shows"')
     $s
   }
 
@@ -231,7 +233,7 @@ if ($Preview) {
 })();
 '@
 
-  $preview = @"
+  $previewDoc = @"
 <!doctype html>
 <html lang="en">
 <head>
@@ -260,8 +262,8 @@ $router
 </body>
 </html>
 "@
-  $preview = $preview.Replace('\@', '@')
-  WT "$HERE\preview.html" $preview
+  $previewDoc = $previewDoc.Replace('\@', '@')
+  WT "$HERE\preview.html" $previewDoc
   "  build/preview.html"
 }
 

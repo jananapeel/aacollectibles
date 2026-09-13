@@ -18,7 +18,7 @@ re-appends the block for you.
 
 ### Regenerating
 
-The four static HTML pages and `theme/assets/styles.css` are **generated**. Don't
+The five static HTML pages and `theme/assets/styles.css` are **generated**. Don't
 hand-edit them; edit the sources and run:
 
 ```
@@ -30,8 +30,9 @@ pwsh build/build.ps1 -Preview     # also emit build/preview.html, one shareable 
 | --- | --- |
 | `styles.css` (root) | Anything visual, in both the prototype and the theme |
 | `main.js` (root) | Prototype behaviour |
-| `build/parts/nav.html`, `foot.html` | Header and footer — shared by all four pages |
+| `build/parts/nav.html`, `foot.html` | Header and footer — shared by every page |
 | `build/parts/home.html` etc. | One page's content |
+| `build/parts/shows.html` | The show schedule (hand-written rows, not generated) |
 | `build/build.ps1` | The placeholder listings (the catalogue near the top) |
 | `build/shopify-additions.css` | Styles that only the Shopify theme needs |
 
@@ -46,13 +47,14 @@ Liquid.
 | `pokemon.html` | Pokémon TCG |
 | `one-piece.html` | One Piece Card Game |
 | `riftbound.html` | Riftbound |
+| `shows.html` | Weekend card-show schedule |
 | `styles.css` | All styling, shared by every page |
-| `main.js` | Cart, toast, case tape, category filters, nav state |
+| `main.js` | Cart, toast, counter strip, filters, nav state, show dates |
 | `Logo.png` | Brand mark — also the favicon |
 
 Every page pulls in the same `styles.css` and `main.js`, so a change to either lands
-everywhere at once. The header and footer markup is copied into each page; if you edit
-one, edit all four.
+everywhere at once. The header and footer markup is copied into each generated page by the build, so edit
+`build/parts/nav.html` or `foot.html` once and rebuild.
 
 The colour palette in `styles.css` is sampled directly from `Logo.png`
 (`--void: #0D1014`, `--gold-fill: #F3DD48`). Keep them matched — the logo's own
@@ -118,3 +120,18 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
 - **Counter hours** in the footer (Tue–Fri 11:00–7:00, Sat 10:00–6:00) imply a walk-in
   shop. Take them off unless that's true — in-person selling is parked for now
   (`DECISIONS.md` 003).
+- **The show schedule is invented.** Every venue, date, table number and admission
+  price in `build/parts/shows.html` is made up, and the venues are deliberately generic
+  so none of it reads as a real event. Replace with actual bookings before launch, and
+  clear the "Sample schedule" tag next to the heading.
+
+### How the show dates work
+
+Show rows carry `data-show-date="YYYY-MM-DD"`, and `main.js` dims anything in the past
+and writes the relative label on the next-show panel ("This Saturday", "In 3 weeks").
+Nothing relative is hardcoded in the HTML, so a stale page degrades to plain dates
+rather than lying about what weekend it is. Two consequences:
+
+- Adding a show means one row plus the right `data-show-date`. Keep the visible date
+  and the attribute in sync — nothing checks them against each other.
+- Past shows dim but stay on the page. Prune them by hand when the list gets long.

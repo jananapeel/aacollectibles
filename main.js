@@ -154,3 +154,39 @@
   var path = (location.pathname.split('/').pop() || 'index.html').replace('.html', '');
   window.AAC.markNav(path === '' ? 'index' : path);
 })();
+
+/* Shows: dim dates that have passed and label how far off the next one is.
+   Driven off data-show-date so the static HTML never carries a stale
+   "this weekend" that goes wrong the moment the page is a week old. */
+(function () {
+  'use strict';
+
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var DAY = 86400000;
+
+  function parseDate(s) {
+    var p = String(s).split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+
+  document.querySelectorAll('[data-show-date]').forEach(function (el) {
+    if (parseDate(el.dataset.showDate) < today) el.classList.add('is-past');
+  });
+
+  document.querySelectorAll('[data-rel]').forEach(function (el) {
+    var when = parseDate(el.getAttribute('data-rel'));
+    var days = Math.round((when - today) / DAY);
+    var weekday = when.toLocaleDateString(undefined, { weekday: 'long' });
+    var label;
+
+    if (days < 0) label = 'Last show';
+    else if (days === 0) label = 'Today';
+    else if (days === 1) label = 'Tomorrow';
+    else if (days < 7) label = 'This ' + weekday;
+    else if (days < 14) label = 'Next ' + weekday;
+    else label = 'In ' + Math.round(days / 7) + ' weeks';
+
+    el.textContent = label;
+  });
+})();
