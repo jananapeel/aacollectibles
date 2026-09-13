@@ -1,2 +1,5 @@
 # generated on demand by: pwsh build/build.ps1 -Preview
 build/preview.html
+
+# business context — the repo is public and Pages serves it over HTTP
+PRIVATE-NOTES.md

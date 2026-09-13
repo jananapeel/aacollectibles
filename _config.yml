@@ -1,0 +1,13 @@
+# GitHub Pages (Jekyll) config.
+#
+# Sole purpose: stop source and working files being served as part of the
+# website. The repo is public either way, but there is no reason for the build
+# tooling, the Shopify theme source or the project notes to be fetchable at
+# jananapeel.github.io/aacollectibles/ or indexed by search engines.
+exclude:
+  - build
+  - theme
+  - NOTES.md
+  - DECISIONS.md
+  - PRIVATE-NOTES.md
+  - README.md

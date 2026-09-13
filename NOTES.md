@@ -3,11 +3,25 @@
 Running list of things to build. For *why* the stack is what it is — Shopify, the
 buylist, the storefront approach — see `DECISIONS.md`.
 
+> **This repo is public**, and GitHub Pages serves files from it over HTTP. Keep business
+> context — margins, what the owners have or have not supplied, anything you would not
+> want a customer or a competitor reading — in `PRIVATE-NOTES.md`, which is gitignored.
+> Technical notes belong here.
+
 ## Site structure
 
-**The brand is spelled AACollectibles** — with an *i*, matching the logo. Settled
-12 Sep 2026; the GitHub repo, the local folder, the remote URL and every page now use
-it. If you find `aacollectables` anywhere, it is a leftover, not an alternative.
+**The brand is spelled AACollectibles** — with an *i*, matching the logo, settled
+12 Sep 2026. Anything reading `aacollectables` is a leftover, not an alternative.
+
+**Casing is a separate matter.** The GitHub repo and its Pages path are lowercase, and
+Pages paths *are* case-sensitive even though github.com URLs are not:
+
+```
+https://jananapeel.github.io/aacollectibles/      ← live
+https://jananapeel.github.io/AACollectibles/      ← 404
+```
+
+Use the lowercase URL on anything printed, linked or turned into a QR code.
 
 Two things live here:
 
@@ -94,9 +108,8 @@ somewhere that actually works:
 
 - A **status band** under the header on every page says ordering direct is coming, and
   links to TCGplayer, Instagram and the shows page.
-- The homepage **`#buy` section** lays out the three real routes. The Instagram card is
-  visually led because buying direct skips the marketplace cut — that is the argument
-  that moves people off TCGplayer and eBay, and it works with no backend at all.
+- The homepage **`#buy` section** lays out the three real routes, with the direct one
+  led visually. It needs no backend.
 - Listings are a **showcase**: name, set and a dated price. No buy button, no stock
   count — see *Data freshness* below.
 - Set tables are plain rows, not links.
@@ -134,46 +147,6 @@ so rather than implying live data. Three deliberate choices:
 
 Re-running the build re-stamps the date, so refreshing prices is: edit the catalogue,
 rebuild, commit. Deliberately not synced — see the reasoning in `DECISIONS.md` 006.
-
-## Waiting on the shop owners
-
-The site is built by a friend helping out, so anything below has to come from whoever
-runs the business and the TCGplayer account. Collected in one place so it can go over as
-a single ask rather than a trickle.
-
-**Unblocks real listings**
-
-- [ ] **TCGplayer inventory export (CSV).** Seller portal → export. Needed columns:
-      card name, set, card number, condition, price, quantity. **No images needed** —
-      the tiles are drawn in CSS. Send the headers as-is and the build gets pointed at
-      the file; see *Filling in listings* below.
-- [ ] **Around 30 cards worth showing.** The site displays 6 on the homepage and 9 per
-      game page — 33 total, not the whole catalogue. Their pick of the best stock beats
-      any automatic selection.
-- [ ] **A photo of one hero card** for the homepage display case. One card, shot once,
-      carries most of the polish on that page.
-
-**Unblocks honest numbers** (all currently invented and visible)
-
-- [ ] Listings per game, off the TCGplayer dashboard — replaces 6,100+ / 3,400+ / 1,200+
-      in the game panels and the facts strips on each category page.
-- [ ] Total orders shipped and/or feedback score. Verifiable marketplace history is the
-      most persuasive thing on the page and the trust it earns is portable to Shopify.
-
-**Unblocks links and copy**
-
-- [ ] **eBay store URL** — the last missing channel. TODO comment marks the spot in
-      `build/parts/foot.html`; it should also become a fourth card in the homepage
-      `#buy` section.
-- [ ] **A contact email** they actually read.
-- [ ] **Real show schedule** — venues, dates, table numbers, admission. Everything in
-      `build/parts/shows.html` is invented placeholder.
-- [ ] **Do they actually stock Riftbound?** The whole page assumes so. Also worth having
-      someone who plays it check the set name/code, the six domains and the card-type
-      terms.
-- [ ] **Is "we beat our marketplace price on a direct DM" a promise they want to make?**
-      It is live on the homepage `#buy` section right now. It is the strongest lever for
-      moving people off TCGplayer and eBay, but it is their margin, not ours.
 
 ### Filling in listings
 
@@ -219,15 +192,9 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
 
 ## Open questions
 
-Decisions for us, as opposed to data we are waiting on — for that see
-*Waiting on the shop owners* above.
-
-- **Everything invented is still on the page.** Listings, prices, stock counts, listing
-  totals, release dates and the whole show schedule. Card names and set codes are real;
-  none of the numbers are. Two visible markers say so — the `tag` in the footer and the
-  "Sample schedule" tag on the shows page — and both should come off together, once,
-  when the real data lands. Until then leave them up: they are the only thing separating
-  a work in progress from a site that lies.
+- **Content is still placeholder.** Two visible markers say so — the `tag` in the footer
+  and the "Sample schedule" tag on the shows page. Both come off together, once, when
+  real data lands. Until then leave them up. Details in `PRIVATE-NOTES.md`.
 
 ### How the show dates work
 

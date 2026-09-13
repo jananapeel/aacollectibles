@@ -84,7 +84,7 @@ Deliberately out of scope for a skeleton — add as you need them:
 ## Known rough edges
 
 - The homepage `index.json` ships with the prototype's **placeholder copy and figures**.
-  Every number in it is invented. Edit in the theme editor before launching.
+  Every number in it is placeholder. Edit in the theme editor before launching.
 - The footer's `note` setting still carries the demo-content warning. Clear it.
 - Counter hours are in the footer section settings. Remove unless a walk-in counter is
   real (`DECISIONS.md` 003).
