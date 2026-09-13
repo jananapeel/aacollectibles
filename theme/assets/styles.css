@@ -840,6 +840,20 @@ button,input,select{font:inherit}
   .btn-buy{height:44px;padding:0 14px;font-size:13px}
 }
 
+/* Freshness, stated rather than implied. The showcase is generated, so a price
+   is only ever true as of the last build — saying so is cheaper and more
+   honest than syncing, and it survives the move to Shopify. */
+.data-note{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:18px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--mist-2);
+}
+.data-note::before{content:"";width:14px;height:1px;background:var(--line-2);flex:none}
+.data-note a{color:var(--gold);border-bottom:1px solid var(--gold-dim)}
+.data-note a:hover{border-bottom-color:var(--gold)}
+
+/* price now sits alone on the tile; stock counts went, they aged worst */
+.buy{align-items:center}
+
 /* ============================================================
    SHOPIFY THEME ADDITIONS
    Everything above this line is shared with the static prototype in the repo

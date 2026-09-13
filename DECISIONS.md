@@ -24,10 +24,10 @@ Four separate jobs, which is why there isn't one single answer:
 Jobs 1–3 are commodity problems that a hosted platform solves better than we would.
 Job 4 is the one with no good off-the-shelf answer at our size.
 
-The site as it stands today is four static HTML pages sharing one stylesheet, with no
-server behind it. The cart in `main.js` is a prop — it increments a counter and shows a
-toast. It has no line items and no persistence, and whichever path below we take will
-replace it entirely.
+The site as it stands today is five static HTML pages sharing one stylesheet, with no
+server behind it. It deliberately cannot take an order: the prop cart was removed and
+the pages route to TCGplayer, Instagram and the shows page instead (see NOTES.md,
+*Before Shopify*). Whichever path below we take restores a real cart from the theme.
 
 ---
 
@@ -132,9 +132,8 @@ decision — selling in two channels off one stock pool makes POS integration th
 deciding factor rather than a feature, and it would put Shopify POS or a card-shop
 platform well ahead of anything else. Reopen 001 and 002 at that point.
 
-Note the homepage currently advertises counter hours (Tue–Fri 11:00–7:00, Sat
-10:00–6:00). That copy is placeholder and should come off before launch unless it's
-true.
+Done: the footer no longer advertises walk-in hours. It now reads online, plus in
+person at a show most weekends.
 
 ---
 
@@ -216,3 +215,41 @@ rather than facts:
 - BinderPOS's current status — it has changed hands
 - TCGplayer API approval process and lead time
 - Photo-upload limits on whichever form service we pick (004)
+
+---
+
+## 006 — No live inventory sync
+
+**Status: Decided** · 12 Sep 2026
+
+The showcase is not synced to TCGplayer. Prices are generated at build time and
+stamped with the build date; per-card stock counts were removed entirely.
+
+**Why:** three reasons, in order of weight.
+
+1. **It would be thrown away.** Once Shopify is the system of record (001) the theme
+   reads inventory from Shopify directly and is live by definition. Anything built
+   against TCGplayer now gets deleted then.
+2. **The showcase is 33 cards, not 9,500.** The site is a shop window; the catalogue
+   lives on the marketplace. Syncing thousands of items to display thirty is
+   disproportionate.
+3. **A static site can't do it cleanly anyway.** On GitHub Pages there are only three
+   options: a browser fetch (blocked by CORS, and the API key would be public), a
+   serverless proxy (a backend, with a key to rotate and an endpoint to monitor), or a
+   scheduled rebuild. Only the third is reasonable, and without API access it does
+   nothing that running the build by hand doesn't.
+
+**What we did instead** — separate data by how fast it moves:
+
+| Changes | Treatment |
+| --- | --- |
+| Name, set, card number, rarity | Hardcoded. Never goes stale. |
+| Price | Shown, with a build date next to it. |
+| Stock count | Removed. Aged worst, hurt most. |
+
+More moving parts means more ways to be embarrassing at a show. A dated price reads as
+careful; a broken sync showing an empty case does not.
+
+**Revisit if** the owners turn out to have TCGplayer API access *and* Shopify slips a
+long way out. Treat API availability as unverified — access has been gated behind
+approval and policy shifted after the eBay acquisition.

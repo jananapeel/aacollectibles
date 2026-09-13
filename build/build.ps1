@@ -31,6 +31,9 @@ $U8   = [Text.UTF8Encoding]::new($false)
 function RT($p) { [IO.File]::ReadAllText($p, $U8) }
 function WT($p, $s) { [IO.File]::WriteAllText($p, $s, $U8) }
 
+# Build date, stamped into the pages so a price never implies it is live.
+$BUILT = (Get-Date).ToString("d MMMM yyyy", [Globalization.CultureInfo]::GetCultureInfo("en-US"))
+
 $POKE = 'Pok&#233;mon'
 $DOT  = '&#183;'
 
@@ -110,7 +113,7 @@ function Render-Listings($items) {
           <p class="set">$($i.setline)</p>
           <span class="cond $($i.condCls)">$($i.condTxt)</span>
           <div class="buy">
-            <div><span class="price">$($i.price)</span><span class="stock">$($i.stock)</span></div>
+            <span class="price">$($i.price)</span>
           </div>
         </div>
       </article>
@@ -168,6 +171,7 @@ foreach ($p in $pages) {
   $doc = $head + $nav.Replace('__LOGO__','Logo.png') + "`n<main>`n" + $bodies[$p.key].Replace('__LOGO__','Logo.png') + "`n</main>`n" +
          $foot.Replace('__LOGO__','Logo.png') + "`n<script src=""main.js""></script>`n</body>`n</html>`n"
   $name = if ($p.key -eq 'index') { 'index.html' } else { "$($p.key).html" }
+  $doc = $doc.Replace("<!--BUILT-->", $BUILT)
   WT "$ROOT\$name" $doc
   "  $name"
 }
@@ -197,7 +201,7 @@ if ($Preview) {
   $routes = ''
   foreach ($p in $pages) {
     $hidden = if ($p.key -eq 'index') { '' } else { ' hidden' }
-    $routes += "<div class=""route"" data-route=""$($p.key)""$hidden>`n" + (ToHashLinks $bodies[$p.key]) + "`n</div>`n"
+    $routes += "<div class=""route"" data-route=""$($p.key)""$hidden>`n" + (ToHashLinks $bodies[$p.key]).Replace("<!--BUILT-->", $BUILT) + "`n</div>`n"
   }
 
   $router = @'

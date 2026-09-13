@@ -93,7 +93,8 @@ somewhere that actually works:
 - The homepage **`#buy` section** lays out the three real routes. The Instagram card is
   visually led because buying direct skips the marketplace cut — that is the argument
   that moves people off TCGplayer and eBay, and it works with no backend at all.
-- Listings are a **showcase**: price and stock, no buy button.
+- Listings are a **showcase**: name, set and a dated price. No buy button, no stock
+  count — see *Data freshness* below.
 - Set tables are plain rows, not links.
 
 **The day Shopify checkout goes live**, delete: the `.status-band` markup in
@@ -114,6 +115,21 @@ back at these same destinations, so linking to it from here just adds a hop — 
 URL carries `utm_source=ig&utm_medium=social&utm_content=link_in_bio`, which would
 misreport website clicks as Instagram bio clicks. If you do want it on the site, strip
 those parameters first.
+
+### Data freshness
+
+The showcase is generated, so a price is only true as of the last build — the pages say
+so rather than implying live data. Three deliberate choices:
+
+- **Per-card stock counts were removed.** They aged worst and hurt most: "1 in stock"
+  on a card that sold last week is the one error a customer can catch you in.
+- **Prices carry a build date**, stamped by `build.ps1` under each grid, next to a link
+  to TCGplayer for the live number.
+- **The pulsing "live" dot** came off the display case. It implied a feed that does not
+  exist.
+
+Re-running the build re-stamps the date, so refreshing prices is: edit the catalogue,
+rebuild, commit. Deliberately not synced — see the reasoning in `DECISIONS.md` 006.
 
 ## Waiting on the shop owners
 
