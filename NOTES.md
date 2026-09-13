@@ -115,6 +115,65 @@ URL carries `utm_source=ig&utm_medium=social&utm_content=link_in_bio`, which wou
 misreport website clicks as Instagram bio clicks. If you do want it on the site, strip
 those parameters first.
 
+## Waiting on the shop owners
+
+The site is built by a friend helping out, so anything below has to come from whoever
+runs the business and the TCGplayer account. Collected in one place so it can go over as
+a single ask rather than a trickle.
+
+**Unblocks real listings**
+
+- [ ] **TCGplayer inventory export (CSV).** Seller portal → export. Needed columns:
+      card name, set, card number, condition, price, quantity. **No images needed** —
+      the tiles are drawn in CSS. Send the headers as-is and the build gets pointed at
+      the file; see *Filling in listings* below.
+- [ ] **Around 30 cards worth showing.** The site displays 6 on the homepage and 9 per
+      game page — 33 total, not the whole catalogue. Their pick of the best stock beats
+      any automatic selection.
+- [ ] **A photo of one hero card** for the homepage display case. One card, shot once,
+      carries most of the polish on that page.
+
+**Unblocks honest numbers** (all currently invented and visible)
+
+- [ ] Listings per game, off the TCGplayer dashboard — replaces 6,100+ / 3,400+ / 1,200+
+      in the game panels and the facts strips on each category page.
+- [ ] Total orders shipped and/or feedback score. Verifiable marketplace history is the
+      most persuasive thing on the page and the trust it earns is portable to Shopify.
+
+**Unblocks links and copy**
+
+- [ ] **eBay store URL** — the last missing channel. TODO comment marks the spot in
+      `build/parts/foot.html`; it should also become a fourth card in the homepage
+      `#buy` section.
+- [ ] **A contact email** they actually read.
+- [ ] **Real show schedule** — venues, dates, table numbers, admission. Everything in
+      `build/parts/shows.html` is invented placeholder.
+- [ ] **Do they actually stock Riftbound?** The whole page assumes so. Also worth having
+      someone who plays it check the set name/code, the six domains and the card-type
+      terms.
+- [ ] **Is "we beat our marketplace price on a direct DM" a promise they want to make?**
+      It is live on the homepage `#buy` section right now. It is the strongest lever for
+      moving people off TCGplayer and eBay, but it is their margin, not ours.
+
+### Filling in listings
+
+Two options once the CSV lands:
+
+1. Paste rows into the catalogue near the top of `build/build.ps1` and rebuild.
+2. Better: point the build at `build/inventory.csv` so a fresh export regenerates the
+   pages. Proposed columns, to be adjusted to whatever TCGplayer actually exports:
+
+   ```
+   game,title,set,code,rarity,condition,price,stock,group,kind
+   ```
+
+   `group` drives the filter chips (era / set range / domain), `kind` is
+   raw / graded / sealed, and the tile colour derives from game and rarity.
+
+**Do not use TCGplayer product images.** Beyond the hotlinking and copyright problems,
+the grading section promises "No stock images, ever: the card in the listing photo is
+the exact card that ships" — stock photography would contradict that on the same site.
+
 ## To build
 
 ### Buy-from-customers page (submit an offer)
@@ -140,27 +199,18 @@ pointing nowhere: the "Browse by set" rows (`href="#"`), search, and the cart.
 
 ## Open questions
 
-- **Verify the Riftbound details.** It's the newest game on the site and the one I'm
-  least certain about — check the set name/code (Origins / OGN), the six domain names,
-  the product list, and the card-type terms on the Riftbound page before publishing.
+Decisions for us, as opposed to data we are waiting on — for that see
+*Waiting on the shop owners* above.
+
 - **Spelling:** the logo reads "COLLECTIBLES" but the repo is named `aacollectables`.
-  The site currently uses the logo's spelling everywhere. Pick one.
-- **Placeholder content:** every listing, price, stock count and calendar date on the
-  homepage is made up. Card names and set codes are real; the numbers are not.
-  Replace before the site goes public. The footer shows a visible note saying so —
-  remove that note once real inventory is in.
-- **Numbers still to supply.** The order count came out of the hero (it said "4,800+
-  orders shipped" and was invented — it now reads "Also selling on TCGplayer and eBay").
-  Still invented and still visible: the per-game listing counts in the game panels
-  (6,100+ / 3,400+ / 1,200+) and the facts strips on each category page. These matter
-  more than usual now that the site gets shown to people in person.
-- **eBay URL.** Everything else is wired; eBay is the one link still missing. There is a
-  TODO comment in `build/parts/foot.html` marking exactly where it goes, and it should
-  also become a fourth card in the homepage `#buy` section.
-- **The show schedule is invented.** Every venue, date, table number and admission
-  price in `build/parts/shows.html` is made up, and the venues are deliberately generic
-  so none of it reads as a real event. Replace with actual bookings before launch, and
-  clear the "Sample schedule" tag next to the heading.
+  The site uses the logo's spelling everywhere. Pick one, and pick it before a domain
+  gets bought.
+- **Everything invented is still on the page.** Listings, prices, stock counts, listing
+  totals, release dates and the whole show schedule. Card names and set codes are real;
+  none of the numbers are. Two visible markers say so — the `tag` in the footer and the
+  "Sample schedule" tag on the shows page — and both should come off together, once,
+  when the real data lands. Until then leave them up: they are the only thing separating
+  a work in progress from a site that lies.
 
 ### How the show dates work
 
